@@ -85,5 +85,5 @@ for i in range(1, rows * cols + 1):
     fig.add_subplot(rows, cols, i)
     plt.imshow(img.permute(2, 1, 0))
     plt.title(class_names[label])
-    plt.axis(False);
+    plt.axis(False)
 plt.show()

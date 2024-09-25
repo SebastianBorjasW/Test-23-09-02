@@ -1,35 +1,49 @@
-import React, { useState, ChangeEvent, FormEvent } from "react";
+import React, { useState, useEffect, ChangeEvent } from "react";
+import { useDropzone } from "react-dropzone";
+import axios from "axios";
 import { API_URL } from "../auth/constants";
-import axios from 'axios';
 
-
-export default function Home() {
-    // Estado para almacenar la imagen seleccionada
+export default function FileUploader() {
     const [selectedImage, setSelectedImage] = useState<File | null>(null);
 
-    // Función para manejar la selección de una imagen
-    const handleImageChange = (event: ChangeEvent<HTMLInputElement>) => {
-        const files = event.target.files;
-        if (files && files.length > 0) {
-            setSelectedImage(files[0]); // Guardamos el archivo seleccionado en el estado
-        }
-    };
+    // Prevenir comportamiento predeterminado en escritorio para drag & drop
+    useEffect(() => {
+        // Evita el comportamiento predeterminado del navegador
+        const preventDefault = (e: Event) => e.preventDefault();
+        
+        window.addEventListener("dragover", preventDefault);
+        window.addEventListener("drop", preventDefault);
+
+        return () => {
+            window.removeEventListener("dragover", preventDefault);
+            window.removeEventListener("drop", preventDefault);
+        };
+    }, []);
+
+    // Manejo del drop de archivos
+    const { getRootProps, getInputProps, isDragActive } = useDropzone({
+        onDrop: (acceptedFiles) => {
+            if (acceptedFiles.length > 0) {
+                setSelectedImage(acceptedFiles[0]);
+            }
+        },
+        accept: "image/*",
+        multiple: false,
+    });
 
     // Función para enviar la imagen al servidor
-    const handleSubmit = async (event: FormEvent) => {
-        event.preventDefault(); // Prevenir que se recargue la página
+    const handleSubmit = async (event: ChangeEvent<HTMLFormElement>) => {
+        event.preventDefault();
 
         if (!selectedImage) {
             alert("Por favor selecciona una imagen");
             return;
         }
 
-        // Crear un objeto FormData para enviar el archivo
         const formData = new FormData();
         formData.append("file", selectedImage);
 
         try {
-            // Realizar la petición HTTP con Axios para enviar la imagen al servidor
             const response = await axios.post(`${API_URL}/load_img`, formData, {
                 headers: {
                     "Content-Type": "multipart/form-data",
@@ -48,24 +62,53 @@ export default function Home() {
     };
 
     return (
-        <div className="bg-cyan-900 min-h-screen">
-            <div>
-                <h1 className="text-3xl font-bold underline flex justify-center items-center py-5">
-                    Clasificador de frutas
-                </h1>
-            </div>
-
-            {/* Formulario para seleccionar y enviar la imagen */}
-            <form onSubmit={handleSubmit} className="flex flex-col items-center py-5">
-                <input
+        <div className="bg-cyan-900 min-h-screen flex justify-center items-center">
+            <form onSubmit={handleSubmit} className="flex flex-col items-center">
+                <div
+                    {...getRootProps({
+                        className:
+                            "border-dashed border-2 border-gray-400 p-6 rounded-lg w-96 text-center cursor-pointer",
+                    })}
+                >
+                    <input {...getInputProps()} 
                     type="file"
                     accept="image/*"
-                    onChange={handleImageChange}
-                    className="mb-4"
-                />
+                     />
+                    {isDragActive ? (
+                        <p className="text-gray-500">Suelta los archivos aquí...</p>
+                    ) : (
+                        <div>
+                            <img
+                                src="/upload-icon.png"
+                                alt="Upload Icon"
+                                className="mx-auto mb-4"
+                            />
+                            <p className="text-gray-500">Arrastra y suelta archivos aquí</p>
+                            <p className="text-gray-500">o</p>
+                            <button
+                                type="button"
+                                className="bg-blue-500 text-white px-4 py-2 rounded-lg mt-2"
+                            >
+                                Buscar archivos
+                            </button>
+                        </div>
+                    )}
+                </div>
+
+                {selectedImage && (
+                    <div className="mt-4">
+                        <p className="text-white">Archivo seleccionado: {selectedImage.name}</p>
+                        <img
+                            src={URL.createObjectURL(selectedImage)}
+                            alt="Vista previa"
+                            className="h-48 w-48 object-cover mt-4"
+                        />
+                    </div>
+                )}
+
                 <button
                     type="submit"
-                    className="bg-blue-500 text-white px-4 py-2 rounded-lg"
+                    className="bg-blue-500 text-white px-4 py-2 rounded-lg mt-4"
                 >
                     Subir Imagen
                 </button>

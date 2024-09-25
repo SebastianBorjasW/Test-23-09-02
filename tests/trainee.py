@@ -60,3 +60,83 @@ batch_size = 30
 train_loader = DataLoader(train_dataset, batch_size=batch_size, shuffle=True, num_workers=2, pin_memory=True)
 test_loader = DataLoader(test_dataset, batch_size=batch_size, shuffle=False, num_workers=2, pin_memory=True)
 val_loader = DataLoader(val_dataset, batch_size=batch_size, shuffle=False, num_workers=2, pin_memory=True)
+
+print(dataset.classes)
+
+# create vgg16 model
+class VGG16(nn.Module):
+  def __init__(self):
+    super(VGG16,self).__init__()
+    self.model = nn.Sequential(
+
+        # first block
+        nn.Conv2d(in_channels=3, out_channels=64, kernel_size=3, padding=1),
+        nn.BatchNorm2d(64),
+        nn.ReLU(),
+        nn.Conv2d(in_channels=64, out_channels=64, kernel_size=3, padding=1),
+        nn.BatchNorm2d(64),
+        nn.ReLU(),
+        nn.MaxPool2d(kernel_size=2, stride=2),
+
+        # second block
+        nn.Conv2d(in_channels=64, out_channels=128, kernel_size=3, padding=1),
+        nn.BatchNorm2d(128),
+        nn.ReLU(),
+        nn.Conv2d(in_channels=128, out_channels=128, kernel_size=3, padding=1),
+        nn.BatchNorm2d(128),
+        nn.ReLU(),
+        nn.MaxPool2d(kernel_size=2, stride=2),
+
+        # third block
+        nn.Conv2d(in_channels=128, out_channels=256, kernel_size=3, padding=1),
+        nn.BatchNorm2d(256),
+        nn.ReLU(),
+        nn.Conv2d(in_channels=256, out_channels=256, kernel_size=3, padding=1),
+        nn.BatchNorm2d(256),
+        nn.ReLU(),
+        nn.Conv2d(in_channels=256, out_channels=256, kernel_size=3, padding=1),
+        nn.BatchNorm2d(256),
+        nn.ReLU(),
+        nn.MaxPool2d(kernel_size=2, stride=2),
+
+        # fourth block
+        nn.Conv2d(in_channels=256, out_channels=512, kernel_size=3, padding=1),
+        nn.BatchNorm2d(512),
+        nn.ReLU(),
+        nn.Conv2d(in_channels=512, out_channels=512, kernel_size=3, padding=1),
+        nn.BatchNorm2d(512),
+        nn.ReLU(),
+        nn.Conv2d(in_channels=512, out_channels=512, kernel_size=3, padding=1),
+        nn.BatchNorm2d(512),
+        nn.ReLU(),
+        nn.MaxPool2d(kernel_size=2, stride=2),
+
+        #fifth block
+        nn.Conv2d(in_channels=512, out_channels=512, kernel_size=3, padding=1),
+        nn.BatchNorm2d(512),
+        nn.ReLU(),
+        nn.Conv2d(in_channels=512, out_channels=512, kernel_size=3, padding=1),
+        nn.BatchNorm2d(512),
+        nn.ReLU(),
+        nn.Conv2d(in_channels=512, out_channels=512, kernel_size=3, padding=1),
+        nn.BatchNorm2d(512),
+        nn.ReLU(),
+        nn.MaxPool2d(kernel_size=2, stride=2),
+
+        # fully connected layers
+        nn.Flatten(),
+
+        nn.Linear(in_features=512*7*7, out_features=4096),
+        nn.ReLU(),
+        nn.Dropout(),
+
+        nn.Linear(in_features=4096, out_features=2048),
+        nn.ReLU(),
+        nn.Dropout(),
+
+        nn.Linear(in_features=2048, out_features=80)
+
+    )
+
+  def forward(self, x):
+    return self.model(x)

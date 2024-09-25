@@ -50,3 +50,13 @@ train_dataset, test_val_dataset = random_split(dataset, [train_size, test_val_si
 test_size = int(0.5 * len(test_val_dataset))
 val_size = len(test_val_dataset) - test_size
 test_dataset, val_dataset = random_split(test_val_dataset, [test_size, val_size])
+
+# Creacion de data loaders
+
+#definimos el tamaño del lote
+batch_size = 30
+
+#creamos los data loaders para cada conjunto de datos
+train_loader = DataLoader(train_dataset, batch_size=batch_size, shuffle=True, num_workers=2, pin_memory=True)
+test_loader = DataLoader(test_dataset, batch_size=batch_size, shuffle=False, num_workers=2, pin_memory=True)
+val_loader = DataLoader(val_dataset, batch_size=batch_size, shuffle=False, num_workers=2, pin_memory=True)

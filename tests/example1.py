@@ -21,7 +21,7 @@ manual_transform = transforms.Compose([
 ])
 
 
-dataset = ImageFolder(root='../raw-img', transform=manual_transform)
+dataset = ImageFolder(root='../train', transform=manual_transform)
 
 
 weights = torchvision.models.EfficientNet_B0_Weights.DEFAULT # .DEFAULT = best available weights 

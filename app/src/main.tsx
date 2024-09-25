@@ -1,7 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import {createBrowserRouter, RouterProvider} from "react-router-dom";
-import { path } from "@tauri-apps/api";
 import Home from "./routes/home";
 import "./index.css";
 

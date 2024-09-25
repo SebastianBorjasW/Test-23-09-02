@@ -11,17 +11,23 @@ import numpy as np
 import seaborn as sns
 import matplotlib.pyplot as plt
 
+
+rootimg = '../train'
 device = "cuda" if torch.cuda.is_available() else "cpu"
 
 #print(device)
 
 manual_transform = transforms.Compose([
+    transforms.RandomHorizontalFlip(p=0.5),
+    transforms.RandomVerticalFlip(p=0.5),
+    transforms.RandomRotation(degrees=1),
     transforms.Resize((224, 224)),
-    transforms.ToTensor()
+    transforms.ToTensor(),
+    transforms.Normalize(mean=[0.5, 0.5, 0.5], std=[0.5, 0.5, 0.5])
 ])
 
 
-dataset = ImageFolder(root='../train', transform=manual_transform)
+dataset = ImageFolder(root= rootimg, transform=manual_transform)
 
 
 weights = torchvision.models.EfficientNet_B0_Weights.DEFAULT # .DEFAULT = best available weights 

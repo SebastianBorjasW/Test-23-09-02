@@ -61,7 +61,7 @@ def classify_image(image_path):
         print(f"Ocurrió un error durante la clasificación: {e}")
         return
 
-image_path = 'img_test/Banana/b7.jpeg' 
+image_path = 'img_test/Apple/a12.jpeg' 
 predicted_class = classify_image(image_path)
 
 if predicted_class is not None:

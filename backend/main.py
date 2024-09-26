@@ -1,12 +1,12 @@
 from fastapi import FastAPI
-from routes import load_img
+from routes import load_class_img
 import uvicorn
 from fastapi.middleware.cors import CORSMiddleware
 
 
 
 app = FastAPI() 
-app.include_router(load_img.app)   
+app.include_router(load_class_img.app)   
 
 
 

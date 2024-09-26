@@ -6,7 +6,7 @@ from PIL import Image
 from fastapi import APIRouter, UploadFile, File, HTTPException
 from typing import List
 from datetime import datetime
-from routes.model_classes.vgg_model_80 import VGG16
+from model_train.model_classes.vgg_model_80 import VGG16
 
 app = APIRouter(prefix="/api/load_img", responses={404: {"description": "Not found"}})
 

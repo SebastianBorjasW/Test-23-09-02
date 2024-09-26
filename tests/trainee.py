@@ -11,6 +11,8 @@ import numpy as np
 import seaborn as sns
 import matplotlib.pyplot as plt
 
+device  = 'cuda' if torch.cuda.is_available() else 'cpu'
+
 #Definir la ruta del dataset
 rootimg = '../train'
 
@@ -61,7 +63,7 @@ train_loader = DataLoader(train_dataset, batch_size=batch_size, shuffle=True, nu
 test_loader = DataLoader(test_dataset, batch_size=batch_size, shuffle=False, num_workers=2, pin_memory=True)
 val_loader = DataLoader(val_dataset, batch_size=batch_size, shuffle=False, num_workers=2, pin_memory=True)
 
-print(dataset.classes)
+#print(dataset.classes)
 
 # create vgg16 model
 class VGG16(nn.Module):
@@ -140,3 +142,62 @@ class VGG16(nn.Module):
 
   def forward(self, x):
     return self.model(x)
+
+model = VGG16().to(device)
+
+#summary(model, input_size=(1,3,224,224))
+
+optimizer = optim.Adam(model.parameters(), lr=0.0001)
+loss_fn = nn.CrossEntropyLoss()
+
+epochs = 25
+
+training_loss = []
+validation_loss = []
+
+for epoch in range(epochs):
+
+    # Training phase
+    model.train()
+    epoch_train_loss = 0.0
+    for images, labels in train_loader:
+        # Move data to the appropriate device
+        images = images.to(device)
+        labels = labels.to(device)
+
+        # Clear gradients
+        optimizer.zero_grad()
+
+        # Forward pass
+        outputs = model(images)
+        train_loss = loss_fn(outputs, labels)
+
+        # Backward pass
+        train_loss.backward()
+        optimizer.step()
+
+        epoch_train_loss += train_loss.item() * images.size(0)  # Accumulate loss
+
+    # Average training loss for the epoch
+    epoch_train_loss /= len(train_loader.dataset)
+    training_loss.append(epoch_train_loss)
+
+    # Validation phase
+    model.eval()
+    epoch_val_loss = 0.0
+    with torch.inference_mode():
+        for val_images, val_labels in val_loader:
+            # Move validation data to the appropriate device
+            val_images = val_images.to(device)
+            val_labels = val_labels.to(device)
+
+            val_outputs = model(val_images)
+            val_loss = loss_fn(val_outputs, val_labels)
+            epoch_val_loss += val_loss.item() * val_images.size(0)  # Accumulate loss
+
+    # Average validation loss for the epoch
+    epoch_val_loss /= len(val_loader.dataset)
+    validation_loss.append(epoch_val_loss)
+
+    # Print loss for the epoch
+    print(f"Epoch: {epoch+1}/{epochs}, Training Loss: {epoch_train_loss:.4f}, Validation Loss: {epoch_val_loss:.4f}")

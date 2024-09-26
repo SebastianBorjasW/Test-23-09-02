@@ -14,7 +14,7 @@ import matplotlib.pyplot as plt
 device  = 'cuda' if torch.cuda.is_available() else 'cpu'
 
 #Definir la ruta del dataset
-rootimg = '../train'
+rootimg = 'img_train'
 
 img_transform = transforms.Compose([
     #rotamos las imagenes con una probabilidad de 0.5 para incrementar

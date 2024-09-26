@@ -9,12 +9,13 @@ from torchinfo import summary
 import numpy as np
 import seaborn as sns
 import matplotlib.pyplot as plt
+from model_classes.vgg_model_80 import VGG16
 
 def train_model():
     device  = 'cpu'
 
     # Definir la ruta del dataset
-    rootimg = '../train'
+    rootimg = 'img_train'
 
     img_transform = transforms.Compose([
         transforms.RandomHorizontalFlip(p=0.5),
@@ -39,9 +40,9 @@ def train_model():
 
     # Creación de los data loaders
     batch_size = 32
-    train_loader = DataLoader(train_dataset, batch_size=batch_size, shuffle=True, num_workers=0, pin_memory=True)
-    test_loader = DataLoader(test_dataset, batch_size=batch_size, shuffle=False, num_workers=0, pin_memory=True)
-    val_loader = DataLoader(val_dataset, batch_size=batch_size, shuffle=False, num_workers=0, pin_memory=True)
+    train_loader = DataLoader(train_dataset, batch_size=batch_size, shuffle=True, num_workers=2, pin_memory=True)
+    test_loader = DataLoader(test_dataset, batch_size=batch_size, shuffle=False, num_workers=2, pin_memory=True)
+    val_loader = DataLoader(val_dataset, batch_size=batch_size, shuffle=False, num_workers=2, pin_memory=True)
 
     print(len(train_loader), len(test_loader), len(val_loader))
 
@@ -126,6 +127,7 @@ def train_model():
             #print("hola")
             model.train()
             epoch_train_loss = 0.0
+            print(len(train_loader))
             for images, labels in train_loader:
                 print(f"Processing batch with {images.size(0)} images")
                 images = images.to(device)

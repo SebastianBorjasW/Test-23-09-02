@@ -12,7 +12,7 @@ import seaborn as sns
 import matplotlib.pyplot as plt
 
 
-rootimg = '../train'
+rootimg = '../img_train'
 device = "cuda" if torch.cuda.is_available() else "cpu"
 
 #print(device)

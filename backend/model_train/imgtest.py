@@ -5,8 +5,6 @@ from torchvision import transforms
 from PIL import Image
 from model_classes.vgg_model_80 import VGG16
 
-
-# Diccionario de clases
 clases = {
     0: 'apple',
     1: 'banana',
@@ -15,13 +13,20 @@ clases = {
     4: 'strawberry'
 }
 
-# Instanciar el modelo y cargar los pesos
 device = torch.device('cpu')
 model = VGG16().to(device)
-model.load_state_dict(torch.load('../models/model.pth', map_location=device))
-model.eval()  # Establecer el modelo en modo de evaluación
 
-# Transformaciones para la imagen de entrada
+try:
+    model.load_state_dict(torch.load('../models/model.pth', map_location=device))
+    model.eval()  # Establecer el modelo en modo de evaluación
+    print("Modelo cargado correctamente.")
+except FileNotFoundError as e:
+    print(f"Error: No se pudo cargar el modelo. {e}")
+    sys.exit(1)
+except Exception as e:
+    print(f"Ocurrió un error al cargar el modelo: {e}")
+    sys.exit(1)
+
 transform = transforms.Compose([
     transforms.Resize((224, 224)),
     transforms.ToTensor(),
@@ -29,27 +34,35 @@ transform = transforms.Compose([
 ])
 
 def classify_image(image_path):
-    # Cargar la imagen
-    img = Image.open(image_path)
-    
-    # Aplicar las transformaciones
+    if not os.path.exists(image_path):
+        print(f"Error: La ruta de la imagen {image_path} no existe.")
+        return
+
+    try:
+        img = Image.open(image_path)
+        img = img.convert('RGB') 
+    except Exception as e:
+        print(f"Ocurrió un error al abrir la imagen: {e}")
+        return
+
     img_t = transform(img)
     
-    # Añadir una dimensión para el lote (batch size = 1)
     batch_t = torch.unsqueeze(img_t, 0)
     
-    # Clasificación
-    with torch.no_grad():
-        output = model(batch_t)
     
-    # Obtener el índice de la clase con la probabilidad más alta
-    _, predicted = torch.max(output, 1)
-    
-    return predicted.item()
+    try:
+        with torch.no_grad():
+            output = model(batch_t)
+        
+        _, predicted = torch.max(output, 1)
+        return predicted.item()
 
-# Uso del modelo para clasificar una imagen
-image_path = 'img_test/Banana/b7.jpeg'  # Cambia esto por la ruta a tu imagen
+    except Exception as e:
+        print(f"Ocurrió un error durante la clasificación: {e}")
+        return
+
+image_path = 'img_test/Banana/b7.jpeg' 
 predicted_class = classify_image(image_path)
 
-# Mostrar el resultado
-print(f'La clase predicha es: {clases[predicted_class]}')
+if predicted_class is not None:
+    print(f'La clase predicha es: {clases.get(predicted_class, "Clase desconocida")}')

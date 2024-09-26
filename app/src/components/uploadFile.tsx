@@ -106,7 +106,7 @@ export default function FileUploader() {
                 {/* Mostrar vista previa solo de la primera imagen seleccionada */}
                 {selectedImages.length > 0 && (
                     <div className="mt-4">
-                        <p className="text-gray-500">Selected image: {getDisplayedFileNames()}</p>
+                        <p className="text-gray-500">Selected images: {getDisplayedFileNames()}</p>
                         <img
                             src={URL.createObjectURL(selectedImages[0])}
                             alt="Vista previa"

@@ -62,6 +62,16 @@ export default function FileUploader() {
         }
     };
 
+    const getDisplayedFileNames = () => {
+        if (selectedImages.length <= 3) {
+            return selectedImages.map((file) => file.name).join(", ");
+        } else {
+            const firstFourFiles = selectedImages.slice(0, 3).map((file) => file.name);
+            return `${firstFourFiles.join(", ")} ...`;
+        }
+    };
+
+
     return (
         <div className="min-h-screen flex justify-center items-center">
             <form onSubmit={handleSubmit} className="flex flex-col items-center">
@@ -96,11 +106,11 @@ export default function FileUploader() {
                 {/* Mostrar vista previa solo de la primera imagen seleccionada */}
                 {selectedImages.length > 0 && (
                     <div className="mt-4">
-                        <p className="text-gray-500">Selected image: {selectedImages[0].name}</p>
+                        <p className="text-gray-500">Selected image: {getDisplayedFileNames()}</p>
                         <img
                             src={URL.createObjectURL(selectedImages[0])}
                             alt="Vista previa"
-                            className="h-48 w-48 object-cover mt-4"
+                            className="h-48 w-48 object-cover mt-4 mx-auto"
                         />
                     </div>
                 )}

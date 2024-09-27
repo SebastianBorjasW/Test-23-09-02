@@ -84,8 +84,8 @@ async def upload_and_classify_images(files: List[UploadFile] = File(...)):
             raise HTTPException(status_code=400, detail=f"El archivo {file.filename} no es una imagen")
 
         #timestamp = datetime.now().strftime("%Y%m%d%H%M%S")
-        #file_extension = os.path.splitext(file.filename)[1]  # Obtener la extensión del archivo
-        unique_filename = f"{file.filename}"  # Crear un nombre único usando la hora
+        #file_extension = os.path.splitext(file.filename)[1]
+        unique_filename = f"{file.filename}" 
 
         file_location = os.path.join(UPLOAD_FOLDER, unique_filename)
 

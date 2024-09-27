@@ -5,7 +5,8 @@ import { API_URL } from "../auth/constants";
 
 export default function FileUploader() {
     const [selectedImages, setSelectedImages] = useState<File[]>([]);
-
+    const [uploadSuccess, setUploadSuccess] = useState(false); 
+    const [downloadLink, setDownloadLink] = useState<string | null>(null); 
     useEffect(() => {
         const preventDefault = (e: Event) => e.preventDefault();
 
@@ -18,19 +19,18 @@ export default function FileUploader() {
         };
     }, []);
 
-    // Manejo del drop de archivos
     const { getRootProps, getInputProps, isDragActive } = useDropzone({
         onDrop: (acceptedFiles) => {
             if (acceptedFiles.length > 0) {
-                // Reemplazar imágenes anteriores con las nuevas
+        
                 setSelectedImages(acceptedFiles);
+                setUploadSuccess(false);  
             }
         },
         accept: "image/*",
-        multiple: true,  // Permitir múltiples imágenes
+        multiple: true,  
     });
 
-    // Función para enviar las imágenes al servidor
     const handleSubmit = async (event: ChangeEvent<HTMLFormElement>) => {
         event.preventDefault();
 
@@ -41,7 +41,7 @@ export default function FileUploader() {
 
         const formData = new FormData();
         selectedImages.forEach((image) => {
-            formData.append("files", image);  // Cambiar "file" a "files" para aceptar múltiples imágenes
+            formData.append("files", image); 
         });
 
         try {
@@ -52,7 +52,15 @@ export default function FileUploader() {
             });
 
             if (response.status === 200) {
+                setUploadSuccess(true);  
                 alert("Imágenes subidas con éxito");
+
+                const downloadResponse = await axios.get(`${API_URL}/load_img/download`, {
+                    responseType: 'blob',  
+                });
+
+                const url = window.URL.createObjectURL(new Blob([downloadResponse.data]));
+                setDownloadLink(url);  
             } else {
                 alert("Error al subir las imágenes");
             }
@@ -71,17 +79,17 @@ export default function FileUploader() {
         }
     };
 
-
     return (
         <div className="min-h-screen flex justify-center items-center">
             <form onSubmit={handleSubmit} className="flex flex-col items-center">
+                {/* El cuadro de drag & drop siempre debe estar visible */}
                 <div
                     {...getRootProps({
                         className:
                             "border-dashed border-2 border-gray-400 p-6 rounded-lg w-96 text-center cursor-pointer",
                     })}
                 >
-                    <input {...getInputProps()} type="file" accept="image/*" multiple />  {/* Cambiado para aceptar múltiples imágenes */}
+                    <input {...getInputProps()} type="file" accept="image/*" multiple /> 
                     {isDragActive ? (
                         <p className="text-gray-500">Drop images here...</p>
                     ) : (
@@ -103,8 +111,8 @@ export default function FileUploader() {
                     )}
                 </div>
 
-                {/* Mostrar vista previa solo de la primera imagen seleccionada */}
-                {selectedImages.length > 0 && (
+                {/* Mostrar vista previa solo si las imágenes no han sido subidas */}
+                {!uploadSuccess && selectedImages.length > 0 && (
                     <div className="mt-4">
                         <p className="text-gray-500">Selected images: {getDisplayedFileNames()}</p>
                         <img
@@ -115,12 +123,27 @@ export default function FileUploader() {
                     </div>
                 )}
 
-                <button
-                    type="submit"
-                    className="bg-white text-cyan-500 border-2 border-cyan-500 px-4 py-2 rounded-lg mt-4"
-                >
-                    Upload Images
-                </button>
+                {!uploadSuccess && (
+                    <button
+                        type="submit"
+                        className="bg-white text-cyan-500 border-2 border-cyan-500 px-4 py-2 rounded-lg mt-4"
+                    >
+                        Upload Images
+                    </button>
+                )}
+
+                {/* Mostrar el botón de descarga solo si la subida fue exitosa */}
+                {uploadSuccess && downloadLink && (
+                    <div className="mt-4">
+                        <a
+                            href={downloadLink}
+                            download="classified_images.zip"
+                            className="bg-cyan-500 text-white px-4 py-2 rounded-lg"
+                        >
+                            Download Classified Images
+                        </a>
+                    </div>
+                )}
             </form>
         </div>
     );

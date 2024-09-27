@@ -4,7 +4,13 @@ import torch
 from torchvision import transforms
 from PIL import Image
 from model_classes.vgg_model_80 import VGG16
+from torch.utils.data import DataLoader, Dataset
+import matplotlib.pyplot as plt
+import seaborn as sns
+from sklearn.metrics import confusion_matrix, accuracy_score
+import numpy as np
 
+# Clases para las predicciones
 clases = {
     0: 'apple',
     1: 'banana',
@@ -13,6 +19,7 @@ clases = {
     4: 'strawberry'
 }
 
+# Cargar el modelo en el dispositivo
 device = torch.device('cpu')
 model = VGG16().to(device)
 
@@ -27,42 +34,81 @@ except Exception as e:
     print(f"Ocurrió un error al cargar el modelo: {e}")
     sys.exit(1)
 
+# Transformación para las imágenes
 transform = transforms.Compose([
     transforms.Resize((224, 224)),
     transforms.ToTensor(),
     transforms.Normalize(mean=[0.5, 0.5, 0.5], std=[0.5, 0.5, 0.5])
 ])
 
-def classify_image(image_path):
-    if not os.path.exists(image_path):
-        print(f"Error: La ruta de la imagen {image_path} no existe.")
-        return
-
-    try:
-        img = Image.open(image_path)
-        img = img.convert('RGB') 
-    except Exception as e:
-        print(f"Ocurrió un error al abrir la imagen: {e}")
-        return
-
-    img_t = transform(img)
-    
-    batch_t = torch.unsqueeze(img_t, 0)
-    
-    
-    try:
-        with torch.no_grad():
-            output = model(batch_t)
+# Definir un Dataset personalizado para cargar las imágenes de prueba
+class ImageDataset(Dataset):
+    def __init__(self, image_dir, transform=None):
+        self.image_dir = image_dir
+        self.transform = transform
+        self.image_paths = []
+        self.labels = []
         
-        _, predicted = torch.max(output, 1)
-        return predicted.item()
+        # Recorrer las subcarpetas dentro de image_dir
+        for class_label, class_name in clases.items():
+            class_folder = os.path.join(image_dir, class_name)
+            if os.path.exists(class_folder):
+                for img_name in os.listdir(class_folder):
+                    img_path = os.path.join(class_folder, img_name)
+                    self.image_paths.append(img_path)
+                    self.labels.append(class_label)
 
-    except Exception as e:
-        print(f"Ocurrió un error durante la clasificación: {e}")
-        return
+    def __len__(self):
+        return len(self.image_paths)
 
-image_path = 'img_test/Apple/a12.jpeg' 
-predicted_class = classify_image(image_path)
+    def __getitem__(self, idx):
+        img_path = self.image_paths[idx]
+        label = self.labels[idx]
 
-if predicted_class is not None:
-    print(f'La clase predicha es: {clases.get(predicted_class, "Clase desconocida")}')
+        img = Image.open(img_path).convert('RGB')
+        
+        if self.transform:
+            img = self.transform(img)
+        
+        return img, label
+
+# Cargar el dataset de prueba
+test_image_dir = 'img_test'  # Carpeta con las imágenes de prueba
+test_dataset = ImageDataset(test_image_dir, transform=transform)
+test_loader = DataLoader(test_dataset, batch_size=32, shuffle=False)
+
+# Función para evaluar el modelo
+def evaluate_model(model, data_loader):
+    model.eval()
+    all_preds = []
+    all_labels = []
+    
+    with torch.no_grad():
+        for images, labels in data_loader:
+            images = images.to(device)
+            labels = labels.to(device)
+
+            outputs = model(images)
+            _, preds = torch.max(outputs, 1)
+
+            all_preds.extend(preds.cpu().numpy())
+            all_labels.extend(labels.cpu().numpy())
+
+    return all_preds, all_labels
+
+# Evaluar el modelo
+predictions, true_labels = evaluate_model(model, test_loader)
+
+# Calcular la precisión
+accuracy = accuracy_score(true_labels, predictions)
+print(f'Precisión del modelo: {accuracy * 100:.2f}%')
+
+# Matriz de confusión
+cm = confusion_matrix(true_labels, predictions)
+plt.figure(figsize=(8, 6))
+sns.heatmap(cm, annot=True, fmt='d', cmap='Blues', xticklabels=list(clases.values()), yticklabels=list(clases.values()))
+plt.xlabel('Predicted')
+plt.ylabel('True')
+plt.title('Matriz de Confusión')
+plt.show()
+

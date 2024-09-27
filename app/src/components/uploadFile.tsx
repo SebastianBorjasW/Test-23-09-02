@@ -103,7 +103,7 @@ export default function FileUploader() {
                             <p className="text-gray-500">or</p>
                             <button
                                 type="button"
-                                className="bg-white text-cyan-500 border-2 border-cyan-500 px-4 py-2 rounded-lg mt-2"
+                                className="bg-white text-cyan-500 border-2 border-cyan-500 px-4 py-2 rounded-lg mt-2 shadow-lg"
                             >
                                 Browse Images
                             </button>
@@ -126,7 +126,7 @@ export default function FileUploader() {
                 {!uploadSuccess && (
                     <button
                         type="submit"
-                        className="bg-white text-cyan-500 border-2 border-cyan-500 px-4 py-2 rounded-lg mt-4"
+                        className="bg-white text-cyan-500 border-2 border-cyan-500 px-4 py-2 rounded-lg mt-4 shadow-lg"
                     >
                         Upload Images
                     </button>
@@ -138,7 +138,7 @@ export default function FileUploader() {
                         <a
                             href={downloadLink}
                             download="classified_images.zip"
-                            className="bg-cyan-500 text-white px-4 py-2 rounded-lg"
+                            className="bg-white text-cyan-500 border-2 border-cyan-500 px-4 py-2 rounded-lg mt-4 shadow-lg"
                         >
                             Download Classified Images
                         </a>

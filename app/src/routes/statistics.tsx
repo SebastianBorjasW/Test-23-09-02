@@ -1,6 +1,4 @@
-//import React, { useState, useEffect, ChangeEvent } from "react";
-
-import UploadFile from "../components/uploadFile";
+import ImagesShow from "../components/images_show";
 import Sidebar from "../components/sideBar";
 
 export default function FileUploader() {
@@ -12,8 +10,9 @@ export default function FileUploader() {
 
             {/* Contenido principal */}
             <div className="flex-grow flex justify-center items-center">
-                <UploadFile />
+                <ImagesShow />
             </div>
         </div>
     );
 }
+

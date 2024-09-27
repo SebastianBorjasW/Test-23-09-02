@@ -21,7 +21,7 @@ export default function Sidebar() {
             Home
           </Link>
           <Link
-            to="/stats"
+            to="/statistics"
             className="hover:bg-gray-700 p-2 rounded transition-colors"
           >
             Statistics

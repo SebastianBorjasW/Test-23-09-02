@@ -7,6 +7,7 @@ export default function FileUploader() {
     const [selectedImages, setSelectedImages] = useState<File[]>([]);
     const [uploadSuccess, setUploadSuccess] = useState(false); 
     const [downloadLink, setDownloadLink] = useState<string | null>(null); 
+
     useEffect(() => {
         const preventDefault = (e: Event) => e.preventDefault();
 
@@ -22,7 +23,6 @@ export default function FileUploader() {
     const { getRootProps, getInputProps, isDragActive } = useDropzone({
         onDrop: (acceptedFiles) => {
             if (acceptedFiles.length > 0) {
-        
                 setSelectedImages(acceptedFiles);
                 setUploadSuccess(false);  
             }
@@ -80,13 +80,13 @@ export default function FileUploader() {
     };
 
     return (
-        <div className="min-h-screen flex justify-center items-center">
-            <form onSubmit={handleSubmit} className="flex flex-col items-center">
-                {/* El cuadro de drag & drop siempre debe estar visible */}
+        <div className="min-h-screen flex justify-center items-center p-4">
+            <form onSubmit={handleSubmit} className="flex flex-col items-center w-full max-w-xl">
+                {/* Cuadro de drag & drop */}
                 <div
                     {...getRootProps({
                         className:
-                            "border-dashed border-2 border-gray-400 p-6 rounded-lg w-96 text-center cursor-pointer",
+                            "border-dashed border-2 border-gray-400 p-6 rounded-lg w-full text-center cursor-pointer sm:w-96",
                     })}
                 >
                     <input {...getInputProps()} type="file" accept="image/*" multiple /> 
@@ -97,9 +97,9 @@ export default function FileUploader() {
                             <img
                                 src="../../public/icons/cloud-upload.svg"
                                 alt="Upload"
-                                className="mx-auto mb-4 w-16 h-16"
+                                className="mx-auto mb-4 w-12 h-12 sm:w-16 sm:h-16"
                             />
-                            <p className="text-gray-500 text-xl">Drag&Drop images here</p>
+                            <p className="text-gray-500 text-lg sm:text-xl">Drag & Drop images here</p>
                             <p className="text-gray-500">or</p>
                             <button
                                 type="button"
@@ -111,14 +111,14 @@ export default function FileUploader() {
                     )}
                 </div>
 
-                {/* Mostrar vista previa solo si las imágenes no han sido subidas */}
+                {/* Vista previa de las imágenes seleccionadas */}
                 {!uploadSuccess && selectedImages.length > 0 && (
                     <div className="mt-4">
                         <p className="text-gray-500">Selected images: {getDisplayedFileNames()}</p>
                         <img
                             src={URL.createObjectURL(selectedImages[0])}
                             alt="Vista previa"
-                            className="h-48 w-48 object-cover mt-4 mx-auto"
+                            className="h-32 w-32 sm:h-48 sm:w-48 object-cover mt-4 mx-auto"
                         />
                     </div>
                 )}
@@ -132,7 +132,7 @@ export default function FileUploader() {
                     </button>
                 )}
 
-                {/* Mostrar el botón de descarga solo si la subida fue exitosa */}
+                {/* Botón de descarga si la subida fue exitosa */}
                 {uploadSuccess && downloadLink && (
                     <div className="mt-4">
                         <a

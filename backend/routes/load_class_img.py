@@ -86,9 +86,9 @@ async def upload_and_classify_images(files: List[UploadFile] = File(...)):
             raise HTTPException(status_code=400, detail=f"El archivo {file.filename} no es una imagen")
 
         # Generar un nombre único para cada archivo basado en la hora actual
-        timestamp = datetime.now().strftime("%Y%m%d%H%M%S")
+        #timestamp = datetime.now().strftime("%Y%m%d%H%M%S")
         file_extension = os.path.splitext(file.filename)[1]  # Obtener la extensión del archivo
-        unique_filename = f"{timestamp}_{file.filename}"  # Crear un nombre único usando la hora
+        unique_filename = f"{file.filename}"  # Crear un nombre único usando la hora
 
         # Definir la ruta completa donde se guardará el archivo temporalmente
         file_location = os.path.join(UPLOAD_FOLDER, unique_filename)

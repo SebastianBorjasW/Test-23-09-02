@@ -12,10 +12,10 @@ app.include_router(load_class_img.app)
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # Permitir todos los dominios. Puedes restringirlo a ["http://localhost:1420"]
+    allow_origins=["*"],  
     allow_credentials=True,
-    allow_methods=["*"],  # Permitir todos los métodos (GET, POST, etc.)
-    allow_headers=["*"],  # Permitir todos los headers
+    allow_methods=["*"], 
+    allow_headers=["*"],
 )
 
 @app.get("/")

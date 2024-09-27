@@ -6,7 +6,7 @@ from PIL import Image
 from fastapi import APIRouter, UploadFile, File, HTTPException
 from typing import List
 from datetime import datetime
-from model_train.model_classes.vgg_model_80 import VGG16
+from model_train.model_classes.vgg_model_5 import VGG16
 
 app = APIRouter(prefix="/api/load_img", responses={404: {"description": "Not found"}})
 
@@ -25,7 +25,7 @@ clases = {
 # Instanciar el modelo y cargar los pesos
 device = torch.device('cpu')
 model = VGG16().to(device)
-model.load_state_dict(torch.load('models/model.pth', map_location=device))
+model.load_state_dict(torch.load('models/model2.pth', map_location=device))
 model.eval()  # Establecer el modelo en modo de evaluación
 
 # Transformaciones para la imagen de entrada
@@ -87,7 +87,7 @@ async def upload_and_classify_images(files: List[UploadFile] = File(...)):
 
         # Generar un nombre único para cada archivo basado en la hora actual
         #timestamp = datetime.now().strftime("%Y%m%d%H%M%S")
-        file_extension = os.path.splitext(file.filename)[1]  # Obtener la extensión del archivo
+        #file_extension = os.path.splitext(file.filename)[1]  # Obtener la extensión del archivo
         unique_filename = f"{file.filename}"  # Crear un nombre único usando la hora
 
         # Definir la ruta completa donde se guardará el archivo temporalmente

@@ -69,87 +69,89 @@ Documente las decisiones tomadas y los desafíos encontrados durante el desarrol
 
 # Instrucciones para correr el proyecto 
 
-1. Clona el repositorio:
+Para correr este proyecto asegurate de tener instalado Nodejs, git y python 3.10 o superior 
+
+#### 1. Clona el repositorio:
 
    ```bash
    git clone https://github.com/SebastianBorjasW/Test-23-09-02
    ```
    
-2. Accede al directorio Test-23-09-02:
+#### 2. Accede al directorio Test-23-09-02:
 
    ```bash
    cd Test-23-09-02
    ```
 
-3. Accede al directorio `app`:
+#### 3. Accede al directorio `app`:
 
    ```bash
    cd app
    ```
 
-4. Instala las dependencias de Node:
+#### 4. Instala las dependencias de Node:
 
    ```bash
    npm install
    ```
 
-5. Instala axios:
+#### 5. Instala axios:
 
    ```bash
    npm install axios
    ```
 
-6. Corre el frontend con el siguiente comando:
+#### 6. Corre el frontend con el siguiente comando:
 
    ```bash
    npm run dev
    ```
 
-7. Abre otra terminal en la ruta del proyecto y accede al directorio del backend:
+#### 7. Abre otra terminal en la ruta del proyecto y accede al directorio del backend:
 
    ```bash
    cd backend
    ```
 
-8. Instala las dependencias de PyTorch:
+#### 8. Instala las dependencias de PyTorch:
 
    ```bash
    pip install torch torchvision torchaudio --extra-index-url https://download.pytorch.org/whl/cu116 
    ```
 
-9. Instala FastAPI:
+#### 9. Instala FastAPI:
 
    ```bash
    pip install fastapi
    ```
 
-10. Instala Uvicorn:
+#### 10. Instala Uvicorn:
 
    ```bash
    pip install "uvicorn[standard]"
    ```
 
-11. Instala `python-multipart`:
+#### 11. Instala `python-multipart`:
 
    ```bash
    pip install python-multipart
    ```
 
-12. Descarga el archivo del siguiente link:
+#### 12. Descarga el archivo del siguiente link:
 
    Link: [Enlace aquí]
 
-13. Muévete a la carpeta `models`:
+#### 13. Muévete a la carpeta `models`:
 
    ```bash
    cd Test-23-09-02/backend/models
    ```
 
-14. Mueve el archivo descargado:
+#### 14. Mueve el archivo descargado:
 
    Mueve el archivo descargado `model2.pth` dentro de la carpeta `models`. Esto se hace porque el archivo es suficientemente grande como para no poder subirse a GitHub.
 
-15. Asegúrate de estar en la carpeta `backend` y corre la aplicación:
+#### 15. Asegúrate de estar en la carpeta `backend` y corre la aplicación:
 
    ```bash
    uvicorn main:app --reload

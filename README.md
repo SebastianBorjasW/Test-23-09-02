@@ -71,10 +71,14 @@ Documente las decisiones tomadas y los desafíos encontrados durante el desarrol
 
 Para correr este proyecto asegurate de tener instalado Nodejs, git y python 3.10 o superior 
 
-[Nodejs](https://nodejs.org/en/download/package-manager)
-[Python](https://www.python.org/downloads/)
-[Git](https://git-scm.com/downloads)
+1. **Node.js**: Puedes descargarlo desde el siguiente enlace:
+   [Descargar Node.js](https://nodejs.org/en/download/package-manager)
 
+2. **Python 3.10 o superior**: Puedes descargar la versión correcta desde el siguiente enlace:
+   [Descargar Python](https://www.python.org/downloads/)
+
+3. **Git**: Asegúrate de tenerlo instalado. Puedes obtenerlo desde el siguiente enlace:
+   [Descargar Git](https://git-scm.com/downloads)
 
 #### 1. Clona el repositorio:
 

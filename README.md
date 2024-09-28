@@ -161,8 +161,8 @@ Ya tendrias que ser capaz de visualizar la interfaz.
 #### 14. Mueve el archivo descargado:
 
    Mueve el archivo descargado `model2.pth` dentro de la carpeta `models`. Esto se hace porque el archivo es suficientemente grande como para no poder subirse a GitHub.
+   Justo en la carpeta como se indica en la imagen, ahi copia el archivo.
 
-    Justo en la carpeta como se indica en la imagen, ahi copia el archivo.
 
    ![Carpeta](assets/model.png)
 

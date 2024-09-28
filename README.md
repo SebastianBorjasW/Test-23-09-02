@@ -178,3 +178,9 @@ Ya tendrias que ser capaz de visualizar la interfaz.
    ```bash
    python -m uvicorn main:app --reload
    ```
+Deberias ver algo similar a esto:
+
+![Backend](assets/back.png)
+
+Listo, ya esta corriendo el frontend y el servidor, ya tendrias que ser capaz
+de usar la aplicaion

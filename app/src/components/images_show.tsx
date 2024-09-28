@@ -1,7 +1,7 @@
 export default function FileUploader() {
     return (
         <div className="bg-white min-h-screen flex flex-col items-center justify-center p-4">
-            <h1 className="text-2xl font-bold mb-4">Model Accuracy: 81.00%</h1>
+            <h1 className="text-2xl font-bold mb-4">Model Accuracy: 89.00%</h1>
 
             <div className="flex flex-wrap justify-center gap-4">
                 {/* Imagen 1 */}

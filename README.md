@@ -127,9 +127,9 @@ Si estas en windows corre este comando:
    ```bash
    pip install torch torchvision torchaudio --extra-index-url https://download.pytorch.org/whl/cu116 
    ```
-   ```bash
-si estas en MAC corre este comando: 
+Si estas en MAC corre este comando: 
 
+   ```bash
 pip3 install --pre torch torchvision torchaudio --extra-index-url https://download.pytorch.org/whl/nightly/cpu 
 ```
 

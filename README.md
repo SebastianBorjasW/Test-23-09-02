@@ -75,8 +75,84 @@ Documente las decisiones tomadas y los desafíos encontrados durante el desarrol
    git clone https://github.com/SebastianBorjasW/Test-23-09-02
    ```
    
-#### 2. Accede al directorio app:
+#### 2. Accede al directorio Test-23-09-02:
+
+   ```bash
+   cd Test-23-09-02
+   ```
+
+#### 3. Accede al directorio app:
 
    ```bash
    cd app
+   ```
+#### 4. Instalar dependencias de Node:
+
+   ```bash
+   npm install
+   ```
+#### 5. Instalar axios:
+
+   ```bash
+   npm install axios
+   ```
+#### 6. Corre el frontend con el siguiente comando:
+
+   ```bash
+   npm run dev
+   ```
+#### 7. Abre otra terminal en la ruta del proyecto e ingresa al directorio del backend:
+
+    ```bash
+   cd backend
+   ```
+#### 8. Instalar las dependencias de pytorch:
+
+    ```bash
+   pip install torch torchvision torchaudio --extra-index-url https://download.pytorch.org/whl/cu116 
+   ```
+
+#### 9. Instala FastAPI:
+
+    ```bash
+   pip install fastapi
+   ```
+
+#### 10. Instala uviconr:
+
+    ```bash
+   pip install "uvicorn[standard]"
+   ```
+#### 11. Instala multipart:
+
+    ```bash
+   pip install python-multipart
+   ```
+#### 12. Descarga el archivo del siguiente link :
+
+    link: 
+
+#### 13. Muevete a la carpeta models:
+
+    ```bash
+   Test-23-09-02\backend\models
+    ```
+
+#### 14. Mueve el archivo descargado:
+
+El archivo descargado model2.pth muevelo dentro de la carpeta models
+Esto se hace porque el archivo model2.pth es suficientemente grande
+para no poder subirse a github
+
+#### 15. Asegurate de estar en la carpeta backend y corre:
+
+    ```bash
+    uvicorn main:app --reload
+    ```
+Si no se detecta uvicorn intenta con el siguiente comando: 
+
+    ```bash
+    python -m uvicorn main:app --reload
+    ```
+
    

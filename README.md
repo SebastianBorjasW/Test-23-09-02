@@ -107,6 +107,10 @@ Para correr este proyecto asegurate de tener instalado Nodejs, git y python 3.10
    npm run dev
    ```
 
+Deberias ver algo similar a esto:
+
+![Vista de terminal](assets/npm_init.png)
+
 #### 7. Abre otra terminal en la ruta del proyecto y accede al directorio del backend:
 
    ```bash

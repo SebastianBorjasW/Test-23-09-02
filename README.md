@@ -66,3 +66,10 @@ Comience por explorar y comprender el conjunto de datos elegido.
 Verifique que las imágenes estén correctamente etiquetadas y organizadas.
 Realice pruebas con una pequeña parte del conjunto de datos para agilizar el proceso de desarrollo.
 Documente las decisiones tomadas y los desafíos encontrados durante el desarrollo.
+
+# Instrucciones para correr el proyecto 
+
+#### 1. Clona el repositorio:
+
+   ```bash
+   git clone https://github.com/SebastianBorjasW/Test-23-09-02

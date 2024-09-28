@@ -15,7 +15,9 @@
         "title": "Image Classifier",
         "width": 800,
         "height": 600,
-        "dragDropEnabled": false
+        "dragDropEnabled": false,
+        "titleBarStyle": "Overlay",
+        "resizable": false
       }
     ],
     "security": {

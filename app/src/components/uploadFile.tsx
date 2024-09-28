@@ -71,10 +71,10 @@ export default function FileUploader() {
     };
 
     const getDisplayedFileNames = () => {
-        if (selectedImages.length <= 3) {
+        if (selectedImages.length <= 2) {
             return selectedImages.map((file) => file.name).join(", ");
         } else {
-            const firstFourFiles = selectedImages.slice(0, 3).map((file) => file.name);
+            const firstFourFiles = selectedImages.slice(0, 2).map((file) => file.name);
             return `${firstFourFiles.join(", ")} ...`;
         }
     };

@@ -73,6 +73,7 @@ Documente las decisiones tomadas y los desafíos encontrados durante el desarrol
 
    ```bash
    git clone https://github.com/SebastianBorjasW/Test-23-09-02
+   ```
    
 #### 2. Accede al directorio app:
 

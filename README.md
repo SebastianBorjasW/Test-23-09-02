@@ -164,7 +164,7 @@ Ya tendrias que ser capaz de visualizar la interfaz.
 
     Justo en la carpeta como se indica en la imagen, ahi copia el archivo.
 
-   ![Carpera](model.png)
+   ![Carpeta](assets/model.png)
 
 
 #### 15. Asegúrate de estar en la carpeta `backend` y corre la aplicación:

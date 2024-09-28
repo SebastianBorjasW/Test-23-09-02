@@ -123,10 +123,15 @@ Ya tendrias que ser capaz de visualizar la interfaz.
    ```
 
 #### 8. Instala las dependencias de PyTorch:
-
+Si estas en windows corre este comando: 
    ```bash
    pip install torch torchvision torchaudio --extra-index-url https://download.pytorch.org/whl/cu116 
    ```
+   ```bash
+si estas en MAC corre este comando: 
+
+pip3 install --pre torch torchvision torchaudio --extra-index-url https://download.pytorch.org/whl/nightly/cpu 
+```
 
 #### 9. Instala FastAPI:
 

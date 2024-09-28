@@ -111,6 +111,11 @@ Deberias ver algo similar a esto:
 
 ![Vista de terminal](assets/npm_init.png)
 
+Si ingresas a: http://localhost:1420/
+Ya tendrias que ser capaz de visualizar la interfaz. 
+
+![Frontend](assets/frontend.png)
+
 #### 7. Abre otra terminal en la ruta del proyecto y accede al directorio del backend:
 
    ```bash

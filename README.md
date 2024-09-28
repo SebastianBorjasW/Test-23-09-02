@@ -71,6 +71,11 @@ Documente las decisiones tomadas y los desafíos encontrados durante el desarrol
 
 Para correr este proyecto asegurate de tener instalado Nodejs, git y python 3.10 o superior 
 
+[Nodejs](https://nodejs.org/en/download/package-manager)
+[Python](https://www.python.org/downloads/)
+[Git](https://git-scm.com/downloads)
+
+
 #### 1. Clona el repositorio:
 
    ```bash

@@ -184,3 +184,5 @@ Deberias ver algo similar a esto:
 
 Listo, ya esta corriendo el frontend y el servidor, ya tendrias que ser capaz
 de usar la aplicaion
+
+Link del video de la explicacion del proyecto: https://drive.google.com/drive/folders/1oij1FCx2KmaW4Yt5Nh8BXsxdoF4uDMOi?usp=sharing

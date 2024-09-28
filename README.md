@@ -139,7 +139,7 @@ Para correr este proyecto asegurate de tener instalado Nodejs, git y python 3.10
 
 #### 12. Descarga el archivo del siguiente link:
 
-   Link: [Enlace aquí]
+   Link: https://drive.google.com/file/d/1o_LbhxjfjBWn4kjsb7LO8vRSDO3hwKgg/view?usp=sharing
 
 #### 13. Muévete a la carpeta `models`:
 
